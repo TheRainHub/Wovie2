@@ -1,4 +1,5 @@
 # 🎬 Wovie v2
+<img width="819" height="751" alt="image" src="https://github.com/user-attachments/assets/1af7a765-0a20-4eeb-8d6f-63c3ca4748cf" />
 
 A modern movie discovery and social platform built with **Next.js 16**, **React 19**, **TypeScript**, **Prisma**, and **PostgreSQL**.
 
