@@ -1,0 +1,140 @@
+// Wovie v2 — Database Schema
+// Prisma ORM + PostgreSQL (Neon)
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================
+// Users & Auth
+// ========================
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  favorites  Favorite[]
+  reviews    Review[]
+  watchlists Watchlist[]
+}
+
+// ========================
+// Movies (from TMDB)
+// ========================
+
+model Movie {
+  id          Int      @id // TMDB movie ID
+  title       String
+  description String?  @db.Text
+  posterUrl   String?
+  backdropUrl String?
+  trailerUrl  String?
+  releaseDate DateTime?
+  rating      Float    @default(0)
+  runtime     Int?
+  createdAt   DateTime @default(now())
+
+  genres    MovieGenre[]
+  cast      MovieActor[]
+  favorites Favorite[]
+  reviews   Review[]
+  watchlistItems WatchlistItem[]
+}
+
+model Genre {
+  id     Int    @id // TMDB genre ID
+  name   String @unique
+  movies MovieGenre[]
+}
+
+model Actor {
+  id           Int     @id // TMDB actor ID
+  name         String
+  profilePhoto String?
+  movies       MovieActor[]
+}
+
+// ========================
+// Junction Tables
+// ========================
+
+model MovieGenre {
+  movie   Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId Int
+  genre   Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  genreId Int
+
+  @@id([movieId, genreId])
+}
+
+model MovieActor {
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId Int
+  actor   Actor  @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  actorId Int
+  role    String?
+
+  @@id([movieId, actorId])
+}
+
+// ========================
+// User Features
+// ========================
+
+model Favorite {
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId Int
+  addedAt DateTime @default(now())
+
+  @@id([userId, movieId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      // 1-10
+  content   String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
+  movie   Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId Int
+
+  @@unique([userId, movieId]) // One review per user per movie
+}
+
+model Watchlist {
+  id        String   @id @default(cuid())
+  name      String
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  items  WatchlistItem[]
+}
+
+model WatchlistItem {
+  addedAt DateTime @default(now())
+
+  watchlist   Watchlist @relation(fields: [watchlistId], references: [id], onDelete: Cascade)
+  watchlistId String
+  movie       Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId     Int
+
+  @@id([watchlistId, movieId])
+}

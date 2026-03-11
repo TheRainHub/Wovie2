@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+:root {
+  --background: #121212;
+  --card: #1a1c20;
+  --accent: #e0cdc0;
+  --accent-yellow: #ffcc00;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+body {
+  background: var(--background);
+  color: #ffffff;
+}
