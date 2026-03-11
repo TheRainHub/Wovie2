@@ -2,7 +2,7 @@
 
 A modern movie discovery and social platform built with **Next.js 16**, **React 19**, **TypeScript**, **Prisma**, and **PostgreSQL**.
 
-> Rewrite of [Wovie v1](../Wovie/) — rebuilt from the ground up with modern architecture, security, and design.
+> Rewrite of [Wovie v1](https://github.com/TheRainHub/Wovie) — rebuilt from the ground up with modern architecture, security, and design.
 
 ## Features
 
@@ -40,7 +40,7 @@ A modern movie discovery and social platform built with **Next.js 16**, **React 
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/wovie-v2.git
+git clone https://github.com/TheRainHub/wovie-v2.git
 cd wovie-v2
 
 # Install dependencies
