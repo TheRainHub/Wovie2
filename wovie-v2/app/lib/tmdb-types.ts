@@ -35,6 +35,6 @@ export interface TMDBCastMember {
     profile_path: string | null;
 }
 
-export interface TMDBGenre {
-    genre: {id: number; name: string}[];
+export interface TMDBGenresResponse {
+    genres: { id: number; name: string }[];
 }
