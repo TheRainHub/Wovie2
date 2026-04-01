@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Patua_One } from 'next/font/google';
 import "./globals.css";
+import Providers from "./providers";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${poppins.variable} ${patuaOne.variable}`}>
       <body className="font-sans bg-background text-white">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
