@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, Variants } from 'framer-motion'
 import { Play, Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -48,6 +48,12 @@ export default function TrendingBanner({ movies }: Props) {
   const mins = movie.runtime ? movie.runtime % 60 : 0
   const runtime = movie.runtime ? `${hours}h ${mins}m` : ''
 
+  const bannerVariants: Variants = {
+    enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 60 : -60 }),
+    center: { opacity: 1, x: 0 },
+    exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -60 : 60 }),
+  }
+
   return (
     <div className="relative w-full rounded-2xl overflow-hidden group"
          style={{ height: 'clamp(280px, 32vw, 420px)' }}>
@@ -57,9 +63,10 @@ export default function TrendingBanner({ movies }: Props) {
         <motion.div
           key={movie.id}
           custom={direction}
-          initial={(dir: number) => ({ opacity: 0, x: dir > 0 ? 60 : -60 })}
-          animate={{ opacity: 1, x: 0 }}
-          exit={(dir: number) => ({ opacity: 0, x: dir > 0 ? -60 : 60 })}
+          variants={bannerVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
           transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           className="absolute inset-0"
         >

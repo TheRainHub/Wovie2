@@ -1,6 +1,6 @@
 "use client";
  
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "@/app/components/Header";
@@ -42,7 +42,7 @@ const landingVariants = {
   exit:    { opacity: 0, transition: { duration: 0.25 } },
 };
  
-export default function HomePage() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const [view, setView]     = useState<ViewState>("landing");
   const [mounted, setMounted] = useState(false);
@@ -147,5 +147,13 @@ export default function HomePage() {
         © 2026 My Invention World. All rights reserved.
       </motion.footer>
     </main>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#08070f]" />}>
+      <HomeContent />
+    </Suspense>
   );
 }
