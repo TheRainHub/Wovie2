@@ -6,7 +6,8 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
 
   if (!token) {
-    const loginUrl = new URL("/login", request.url);
+    const loginUrl = new URL("/", request.url);
+    loginUrl.searchParams.set("view", "login");
     loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
     return NextResponse.redirect(loginUrl);
   }
@@ -15,5 +16,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/movies/:path*", "/profile/:path*", "/search/:path*", "/watchlists/:path*"],
+  matcher: ["/profile/:path*", "/watchlists/:path*"],
 };
