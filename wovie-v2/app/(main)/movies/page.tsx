@@ -95,7 +95,7 @@ export default function MoviesPage() {
 
     observer.observe(el)
     return () => observer.disconnect()
-  }, [loadMore])
+  }, [loadMore, loading])
 
   // Split movies into sections without repetitions
   const hero = heroMovie || movies[0]
