@@ -71,7 +71,7 @@ export default function Header() {
           : "bg-gradient-to-b from-black/60 to-transparent"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-1 h-16 flex items-center justify-between">
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-8">
           {/* Logo */}
@@ -107,14 +107,14 @@ export default function Header() {
           </motion.div>
 
           {/* Nav Links */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1.5">
             {NAV_LINKS.map(({ label, href }) => {
               const isActive = pathname === href || (href !== "/movies" && pathname?.startsWith(href));
               return (
                 <Link
                   key={label}
                   href={href}
-                  className={`relative px-3 py-1.5 rounded-md text-[13px] font-medium transition-all duration-200 ${
+                  className={`relative px-3.5 py-1.5 rounded-md text-[15px] font-medium transition-all duration-200 ${
                     isActive
                       ? "text-white"
                       : "text-white/50 hover:text-white/80 hover:bg-white/5"
@@ -142,7 +142,7 @@ export default function Header() {
               <motion.form
                 key="search-bar"
                 initial={{ width: 0, opacity: 0 }}
-                animate={{ width: 260, opacity: 1 }}
+                animate={{ width: 500, opacity: 1 }}
                 exit={{ width: 0, opacity: 0 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 onSubmit={handleSearch}
@@ -240,7 +240,7 @@ export default function Header() {
 
                     <div className="border-t border-white/5 pt-1">
                       <button
-                        onClick={() => signOut()}
+                        onClick={() => signOut({ callbackUrl: "/" })}
                         className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-400/80
                                    hover:text-red-400 hover:bg-white/5 transition-all"
                       >
@@ -253,14 +253,14 @@ export default function Header() {
               </AnimatePresence>
             </div>
           ) : (
-            <Link
-              href="/login"
+            <button
+              onClick={() => router.push(`/?view=login&t=${Date.now()}`)}
               className="text-sm font-medium text-white/80 hover:text-white px-4 py-1.5 rounded-lg
                          border border-white/15 hover:border-white/30 hover:bg-white/5
-                         transition-all duration-200"
+                         transition-all duration-200 cursor-pointer"
             >
               Sign In
-            </Link>
+            </button>
           )}
         </div>
       </div>

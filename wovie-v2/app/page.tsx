@@ -1,6 +1,7 @@
 "use client";
  
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "@/app/components/Header";
 import LoginForm from "@/app/(auth)/components/LoginForm";
@@ -42,11 +43,18 @@ const landingVariants = {
 };
  
 export default function HomePage() {
+  const searchParams = useSearchParams();
   const [view, setView]     = useState<ViewState>("landing");
   const [mounted, setMounted] = useState(false);
   const prevView = useRef<ViewState>("landing");
  
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    const v = searchParams.get("view");
+    if (v === "login" || v === "register") {
+      setView(v);
+    }
+  }, [searchParams]);
  
   const navigateTo = (next: ViewState) => {
     prevView.current = view;

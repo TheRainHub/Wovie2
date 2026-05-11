@@ -50,7 +50,11 @@ export default function LoginForm({ onSwitch, onClose }: { onSwitch: () => void;
   };
 
   return (
-    <div className="relative w-full max-w-[480px] p-7 sm:p-9 rounded-2xl border border-white/10 bg-[#162938]/95 backdrop-blur-xl shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+    <div className="relative w-full max-w-[480px] p-7 sm:p-9 rounded-2xl border bg-[#162938]/95 backdrop-blur-xl
+                    transition-all duration-1000 ease-out
+                    border-cyan-400/20 shadow-[0_0_40px_rgba(34,211,238,0.15),0_8px_40px_rgba(0,0,0,0.5)]
+                    has-[[data-saber-ignited=true]]:border-cyan-400/60
+                    has-[[data-saber-ignited=true]]:shadow-[0_0_120px_rgba(34,211,238,0.4),0_8px_40px_rgba(0,0,0,0.5)]">
       <CloseButton onClose={onClose || (() => router.push("/"))} />
 
       <motion.div variants={stagger} initial="hidden" animate="show" exit="hidden" className="space-y-6">
