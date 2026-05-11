@@ -114,20 +114,10 @@ export default function Header() {
                 <Link
                   key={label}
                   href={href}
-                  className={`relative px-3.5 py-1.5 rounded-md text-[15px] font-medium transition-all duration-200 ${
-                    isActive
-                      ? "text-white"
-                      : "text-white/50 hover:text-white/80 hover:bg-white/5"
-                  }`}
+                  data-active={isActive ? "" : undefined}
+                  className="relative px-3.5 py-1.5 rounded-md text-[15px] font-medium text-white/60 hover:text-white transition-colors data-[active]:text-white after:absolute after:bottom-0 after:left-3 after:h-0.5 after:w-[calc(100%-24px)] after:bg-accent after:scale-x-0 data-[active]:after:scale-x-100 after:transition-transform after:duration-300"
                 >
                   {label}
-                  {isActive && (
-                    <motion.div
-                      layoutId="nav-active"
-                      className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-[#D4537E]"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    />
-                  )}
                 </Link>
               );
             })}

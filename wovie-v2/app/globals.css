@@ -3,15 +3,15 @@
 :root {
   --background: #121212;
   --card: #1a1c20;
-  --accent: #e0cdc0;
-  --accent-yellow: #ffcc00;
+  --accent: #E8454A;
+  --accent-yellow: #F5A623;
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
 
-  --gradient-from: #D4537E;
-  --gradient-to: #993556;
+  --gradient-from: #E8454A;
+  --gradient-to: #c2292e;
 
-  --state-focus: #D4537E;
+  --state-focus: #E8454A;
   --state-valid: #22c55e;
   --state-error: #ef4444;
 }

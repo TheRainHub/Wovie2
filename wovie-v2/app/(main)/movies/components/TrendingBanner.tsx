@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface Movie {
   id: number
@@ -64,10 +65,13 @@ export default function TrendingBanner({ movies }: Props) {
         >
           {/* Backdrop fills entire banner */}
           {movie.backdropUrl && (
-            <img
-              src={movie.backdropUrl}
+            <Image 
+              src={movie.backdropUrl} 
               alt={movie.title}
-              className="absolute inset-0 w-full h-full object-cover"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover" 
             />
           )}
 
@@ -80,7 +84,7 @@ export default function TrendingBanner({ movies }: Props) {
             <div className="max-w-3xl">
                 {/* Badges */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D4537E] text-white uppercase tracking-wider">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-accent text-white uppercase tracking-wider">
                     #{current + 1} Trending
                   </span>
                   {movie.genres?.slice(0, 2).map(g => (
@@ -116,9 +120,10 @@ export default function TrendingBanner({ movies }: Props) {
                 <Link
                   href={`/movies/${movie.id}`}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg font-semibold text-xs
-                             bg-white text-black hover:bg-white/90 transition-all"
+                             bg-white text-black hover:bg-white/90 transition-all
+                             shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
                 >
-                  <Play className="w-3.5 h-3.5" fill="black" />
+                  <Play className="w-3.5 h-3.5 fill-black text-black" />
                   Watch now
                 </Link>
             </div>
@@ -154,7 +159,7 @@ export default function TrendingBanner({ movies }: Props) {
             onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i) }}
             className={`rounded-full transition-all duration-300 ${
               i === current
-                ? 'w-5 h-2 bg-[#D4537E]'
+                ? 'w-5 h-2 bg-accent'
                 : 'w-2 h-2 bg-white/25 hover:bg-white/50'
             }`}
           />

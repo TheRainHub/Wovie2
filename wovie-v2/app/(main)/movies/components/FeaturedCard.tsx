@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import HoverOverlay from './HoverOverlay'
 import ProgressBar from './ProgressBar'
 
@@ -37,8 +38,13 @@ export default function FeaturedCard({ movie, progress }: Props) {
       >
         {/* Background image */}
         {movie.backdropUrl && (
-          <img src={movie.backdropUrl} alt={movie.title}
-               className="absolute inset-0 w-full h-full object-cover" />
+          <Image 
+            src={movie.backdropUrl} 
+            alt={movie.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 60vw"
+            className="object-cover" 
+          />
         )}
 
         {/* Gradient overlay */}

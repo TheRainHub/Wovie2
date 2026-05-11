@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import HoverOverlay from './HoverOverlay'
 
 interface Movie {
@@ -36,8 +37,13 @@ function TallCard({ movie, rank }: { movie: Movie; rank: number }) {
         onHoverEnd={() => setIsHovered(false)}
       >
         {movie.posterUrl && (
-          <img src={movie.posterUrl} alt={movie.title}
-               className="absolute inset-0 w-full h-full object-cover" />
+          <Image 
+            src={movie.posterUrl} 
+            alt={movie.title}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+            className="object-cover" 
+          />
         )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
@@ -54,18 +60,18 @@ function TallCard({ movie, rank }: { movie: Movie; rank: number }) {
           {rank}
         </span>
 
+        {/* Info inside the card — bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-3 z-20">
+          <h4 className="text-sm font-semibold text-white line-clamp-1 drop-shadow-md">{movie.title}</h4>
+          <div className="flex items-center gap-1.5 text-xs text-white/70 mt-0.5">
+            <Star className="w-3 h-3 text-accent-yellow fill-accent-yellow" />
+            <span className="text-white/90 font-medium">{movie.rating.toFixed(1)}</span>
+            {year && <span className="text-white/50">{year}</span>}
+          </div>
+        </div>
+
         <HoverOverlay isHovered={isHovered} />
       </motion.div>
-
-      {/* Info below card */}
-      <div className="mt-2 px-1">
-        <h4 className="text-sm font-semibold text-white line-clamp-1">{movie.title}</h4>
-        <div className="flex items-center gap-1.5 text-xs text-white/50 mt-0.5">
-          <Star className="w-3 h-3 text-accent-yellow fill-accent-yellow" />
-          <span className="text-white/80">{movie.rating.toFixed(1)}</span>
-          {year && <span>{year}</span>}
-        </div>
-      </div>
     </Link>
   )
 }

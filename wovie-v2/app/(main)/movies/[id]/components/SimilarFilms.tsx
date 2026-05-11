@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface SimilarFilm {
   id: number;
@@ -17,20 +18,27 @@ export default function SimilarFilms({ films }: { films: SimilarFilm[] }) {
           <Link href={`/movies/${film.id}`} key={film.id} className="group">
             <div className="aspect-[2/3] rounded-xl overflow-hidden bg-white/5 border border-white/10 mb-2 relative">
               {film.poster_path ? (
-                <img
+                <Image
                   src={`https://image.tmdb.org/t/p/w342${film.poster_path}`}
                   alt={film.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 16vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-white/20 text-xs text-center p-2">
                   {film.title}
                 </div>
               )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+              
+              {/* Info inside the card — bottom */}
+              <div className="absolute bottom-0 left-0 right-0 p-3 z-20">
+                <p className="text-sm font-semibold text-white/90 group-hover:text-white line-clamp-1 drop-shadow-md transition-colors">
+                  {film.title}
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-white/80 group-hover:text-white line-clamp-1 transition-colors">
-              {film.title}
-            </p>
           </Link>
         ))}
       </div>

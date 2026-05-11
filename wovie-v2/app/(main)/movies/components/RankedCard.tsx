@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import HoverOverlay from './HoverOverlay'
 import ProgressBar from './ProgressBar'
 
@@ -35,8 +36,13 @@ export default function RankedCard({ movie, rank, progress, isNew }: Props) {
       >
         {/* Poster */}
         {movie.posterUrl && (
-          <img src={movie.posterUrl} alt={movie.title}
-               className="absolute inset-0 w-full h-full object-cover" />
+          <Image 
+            src={movie.posterUrl} 
+            alt={movie.title}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+            className="object-cover" 
+          />
         )}
 
         {/* Bottom gradient — all info lives here */}
@@ -52,7 +58,7 @@ export default function RankedCard({ movie, rank, progress, isNew }: Props) {
         {/* NEW badge — top left */}
         {isNew && (
           <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded text-[9px] font-bold
-                          bg-[#D4537E] text-white uppercase tracking-wider">
+                          bg-accent text-white uppercase tracking-wider">
             New
           </div>
         )}

@@ -122,13 +122,13 @@ export default function HeroBanner({ movie, isLastVisited }: Props) {
                            bg-white text-black hover:bg-white/90 transition-all duration-200
                            shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
               >
-                <Play className="w-4 h-4" fill="black" />
+                <Play className="w-4 h-4 fill-black text-black" />
                 Watch
               </Link>
 
               <button className="flex items-center gap-2 px-5 py-3 rounded-xl font-medium text-sm
-                                 bg-white/10 text-white border border-white/15
-                                 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm">
+                                 bg-white/5 text-white/80 border border-white/10
+                                 hover:bg-white/10 hover:text-white transition-all duration-200 backdrop-blur-sm">
                 <Plus className="w-4 h-4" />
                 Add to list
               </button>
@@ -136,8 +136,8 @@ export default function HeroBanner({ movie, isLastVisited }: Props) {
               <Link
                 href={`/movies/${movie.id}`}
                 className="flex items-center gap-2 px-5 py-3 rounded-xl font-medium text-sm
-                           bg-white/10 text-white border border-white/15
-                           hover:bg-white/20 transition-all duration-200 backdrop-blur-sm"
+                           bg-white/5 text-white/80 border border-white/10
+                           hover:bg-white/10 hover:text-white transition-all duration-200 backdrop-blur-sm"
               >
                 <Info className="w-4 h-4" />
                 More info
