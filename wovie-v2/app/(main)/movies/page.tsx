@@ -72,7 +72,11 @@ export default function MoviesPage() {
     fetch(url)
       .then(r => r.json())
       .then(d => {
-        setMovies(prev => [...prev, ...(d.movies || [])])
+        setMovies(prev => {
+          const existingIds = new Set(prev.map(m => m.id))
+          const newMovies = (d.movies || []).filter((m: any) => !existingIds.has(m.id))
+          return [...prev, ...newMovies]
+        })
         setHasMore(d.hasMore ?? false)
         setPage(nextPage)
         setLoadingMore(false)
@@ -93,10 +97,12 @@ export default function MoviesPage() {
     return () => observer.disconnect()
   }, [loadMore])
 
-  // Split movies into sections
+  // Split movies into sections without repetitions
   const hero = heroMovie || movies[0]
-  const trendingMovies = movies.slice(0, 5) // Top 5 for rotating banner
-  const catalogMovies = movies // All movies for the grid
+  const pool = movies.filter(m => m.id !== hero?.id)
+  
+  const trendingMovies = pool.slice(0, 5) // Top 5 for rotating banner
+  const catalogMovies = pool.slice(5) // The rest for the grid
 
   return (
     <div className="min-h-screen bg-background text-white">

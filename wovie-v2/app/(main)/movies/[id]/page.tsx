@@ -8,6 +8,8 @@ import SaveLastVisited from './components/SaveLastVisited'
 
 const IMG = 'https://image.tmdb.org/t/p'
 
+export const revalidate = 3600; // ISR: Revalidate movie pages every 1 hour
+
 export default async function FilmPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const film = await getFilm(resolvedParams.id)

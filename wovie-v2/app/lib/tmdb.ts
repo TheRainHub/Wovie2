@@ -12,7 +12,9 @@ async function tmdbFetch<T>(endpoint: string, params?: Record<string, string>): 
             url.searchParams.set(key, val));
     }
 
-    const res = await fetch(url.toString());
+    const res = await fetch(url.toString(), {
+        next: { revalidate: 3600 } // Cache TMDB responses for 1 hour
+    });
     if (!res.ok) throw new Error(`TMDB error: ${res.status} ${res.statusText}`);
     return res.json();
 }

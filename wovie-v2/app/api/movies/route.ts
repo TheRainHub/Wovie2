@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/db";
 
+export const revalidate = 900; // ISR: Cache catalog data for 15 minutes
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
