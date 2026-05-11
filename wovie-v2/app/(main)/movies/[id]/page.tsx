@@ -4,6 +4,7 @@ import PosterInfo from './components/PosterInfo'
 import TrailerPlayer from './components/TrailerPlayer'
 import CastGrid from './components/CastGrid'
 import SimilarFilms from './components/SimilarFilms'
+import SaveLastVisited from './components/SaveLastVisited'
 
 const IMG = 'https://image.tmdb.org/t/p'
 
@@ -19,6 +20,7 @@ export default async function FilmPage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="pb-20">
+      <SaveLastVisited movieId={film.id} />
       <CinematicHero
         backdropUrl={`${IMG}/original${film.backdrop_path}`}
         title={film.title}

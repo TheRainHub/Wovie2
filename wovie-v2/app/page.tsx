@@ -88,11 +88,7 @@ export default function HomePage() {
  
       {/* Header */}
       {mounted && (
-        <Header
-          onLogoClick={() => navigateTo("landing")}
-          showSignIn={view === "landing"}
-          onSignInClick={() => navigateTo("login")}
-        />
+        <Header />
       )}
  
       {/* Content */}
