@@ -8,6 +8,7 @@ import RankedCard from './components/RankedCard'
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState<any[]>([])
+  const [trendingMovies, setTrendingMovies] = useState<any[]>([])
   const [heroMovie, setHeroMovie] = useState<any>(null)
   const [genres, setGenres] = useState<any[]>([])
   const [activeGenre, setActiveGenre] = useState<string | null>(null)
@@ -17,9 +18,10 @@ export default function MoviesPage() {
   const [loadingMore, setLoadingMore] = useState(false)
   const observerRef = useRef<HTMLDivElement>(null)
 
-  // Load genres
+  // Load genres and initial trending
   useEffect(() => {
     fetch('/api/movies/genres').then(r => r.json()).then(d => setGenres(d.genres))
+    fetch('/api/movies?limit=5&sort=rating').then(r => r.json()).then(d => setTrendingMovies(d.movies || []))
   }, [])
 
   // Trigger TMDB sync on first visit (fire-and-forget)
@@ -98,22 +100,23 @@ export default function MoviesPage() {
   }, [loadMore, loading])
 
   // Split movies into sections without repetitions
-  const hero = heroMovie || movies[0]
-  const pool = movies.filter(m => m.id !== hero?.id)
+  const hero = heroMovie || (trendingMovies.length > 0 ? trendingMovies[0] : movies[0])
   
-  const trendingMovies = pool.slice(0, 5) // Top 5 for rotating banner
-  const catalogMovies = pool.slice(5) // The rest for the grid
+  const reservedIds = new Set(trendingMovies.map(m => m.id))
+  if (hero) reservedIds.add(hero.id)
+  
+  const catalogMovies = movies.filter(m => !reservedIds.has(m.id))
 
   return (
     <div className="min-h-screen bg-background text-white">
       {/* Hero Banner — last visited movie */}
-      {!loading && hero && <HeroBanner movie={hero} isLastVisited={!!heroMovie} />}
+      {hero && <HeroBanner movie={hero} isLastVisited={!!heroMovie} />}
 
       {/* Content */}
       <div className="max-w-[1400px] mx-auto">
 
         {/* Trending rotating banner */}
-        {!loading && trendingMovies.length > 0 && (
+        {trendingMovies.length > 0 && (
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-white flex items-center gap-2 mb-4">
               🔥 Trending now

@@ -9,8 +9,8 @@ import { Search, Bell, ChevronDown, LogOut, User, Settings, X } from "lucide-rea
 
 const NAV_LINKS = [
   { label: "Movies", href: "/movies" },
-  { label: "Top Rated", href: "/movies?sort=rating" },
-  { label: "New Releases", href: "/movies?sort=date" },
+  { label: "Top Rated", href: "/top-rated" },
+  { label: "New Releases", href: "/new-releases" },
 ];
 
 export default function Header() {
